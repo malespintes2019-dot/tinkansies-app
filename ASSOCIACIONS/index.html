@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accés Associacions</title>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial;
+    }
+    .box {
+      background: #111;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    input {
+      padding: 10px;
+      width: 200px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      background: #ffcc00;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #error {
+      color: #ff4444;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Accés per Associacions</h2>
+  <input id="codeInput" placeholder="Introdueix el codi" />
+  <br />
+  <button onclick="login()">ENTRAR</button>
+  <p id="error"></p>
+</div>
+
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyBWAWWLLIiAJc7_w6Is9BbhcjjWZtOQC0",
+  authDomain: "emg-fitxes.firebaseapp.com",
+  projectId: "emg-fitxes",
+  storageBucket: "emg-fitxes.appspot.com",
+  messagingSenderId: "1083083243962",
+  appId: "1:1083083243962:web:49b6d51dad2aa36abe1d83"
+};
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  async function login() {
+    const code = document.getElementById("codeInput").value.trim();
+    const err = document.getElementById("error");
+    err.textContent = "";
+
+    if (!code) {
+        err.textContent = "Posa un codi!";
+        return;
+    }
+
+    try {
+        const ref = db.collection("associacions");
+        const snap = await ref.where("code","==",code).get();
+
+        if (snap.empty) {
+            err.textContent = "Codi incorrecte";
+            return;
+        }
+
+        const assoc = snap.docs[0];
+        localStorage.setItem("associationId", assoc.id);
+        localStorage.setItem("associationCode", code);
+        localStorage.setItem("associationName", assoc.data().name || "");
+
+        window.location.href = "../index.html";
+    } catch(e) {
+        console.error(e);
+        err.textContent = "Error de connexió";
+    }
+  }
+</script>
+
+</body>
+</html>
