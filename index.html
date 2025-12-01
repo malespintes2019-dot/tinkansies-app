@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fitxes Grups - Espai Músics Garrotxa</title>
+  <title>Fitxes Grups - Tink Ànsies</title>
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#000000" />
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -13,12 +13,12 @@
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
   <style>
     :root {
-      --yellow: #ffeb3b;
-      --yellow-soft: #fff59d;
+      --yellow: #ff0000;
+      --yellow-soft: #ff4569;
       --bg: #000000;
       --bg-soft: #111111;
-      --accent: #ff4081;
-      --accent-2: #40c4ff;
+      --accent: #ff1744;
+      --accent-2: #ff8a80;
       --card: #161616;
       --border-soft: rgba(255, 255, 255, 0.1);
       --text-main: #ffffff;
@@ -58,7 +58,7 @@
       padding: 0.75rem 1rem;
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      background: radial-gradient(circle at top left, rgba(255, 235, 59, 0.08), transparent 60%),
+      background: radial-gradient(circle at top left, rgba(255, 0, 0, 0.18), transparent 60%),
                   rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(14px);
       position: sticky;
@@ -76,12 +76,12 @@
       width: 40px;
       height: 40px;
       border-radius: 999px;
-      border: 2px solid rgba(255, 235, 59, 0.8);
+      border: 2px solid rgba(255, 0, 0, 0.9);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 30% 0%, rgba(255, 235, 59, 0.9), rgba(255, 160, 0, 0.2));
-      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.9), 0 0 18px rgba(255, 235, 59, 0.65);
+      background: radial-gradient(circle at 30% 0%, rgba(255, 0, 0, 0.9), rgba(120, 0, 0, 0.4));
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.9), 0 0 18px rgba(255, 0, 0, 0.7);
       overflow: hidden;
     }
 
@@ -135,14 +135,14 @@
     }
 
     .top-nav-btn.active {
-      background: rgba(255, 235, 59, 0.14);
-      border-color: rgba(255, 235, 59, 0.8);
-      color: #fffde7;
-      box-shadow: 0 0 14px rgba(255, 235, 59, 0.4);
+      background: rgba(255, 0, 0, 0.18);
+      border-color: rgba(255, 0, 0, 0.9);
+      color: #ffe4e4;
+      box-shadow: 0 0 14px rgba(255, 0, 0, 0.4);
     }
 
     .top-nav-btn.active span.dot {
-      background: #ffeb3b;
+      background: #ff0000;
     }
 
     @media (max-width: 720px) {
@@ -303,7 +303,7 @@
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      filter: drop-shadow(0 0 25px rgba(255, 235, 59, 0.7));
+      filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.7));
     }
 
     .burst-btn-inner {
@@ -341,7 +341,7 @@
 
     .burst-btn:hover {
       transform: translateY(-3px) scale(1.02);
-      filter: drop-shadow(0 0 35px rgba(255, 235, 59, 0.95));
+      filter: drop-shadow(0 0 35px rgba(255, 0, 0, 0.95));
     }
 
     .home-grid {
@@ -358,7 +358,7 @@
     }
 
     .home-card {
-      background: radial-gradient(circle at top left, rgba(255, 235, 59, 0.14), transparent 55%),
+      background: radial-gradient(circle at top left, rgba(255, 0, 0, 0.24), transparent 55%),
                   radial-gradient(circle at bottom right, rgba(255, 64, 129, 0.12), transparent 55%),
                   #050505;
       border-radius: 22px;
@@ -412,7 +412,7 @@
     }
 
     .pill strong {
-      color: #fff59d;
+      color: #ffb3b3;
     }
 
     .home-footnote {
@@ -472,8 +472,8 @@
 
     input:focus,
     textarea:focus {
-      border-color: rgba(255, 235, 59, 0.8);
-      box-shadow: 0 0 0 1px rgba(255, 235, 59, 0.5);
+      border-color: rgba(255, 0, 0, 0.9);
+      box-shadow: 0 0 0 1px rgba(255, 0, 0, 0.6);
       background: rgba(0, 0, 0, 0.95);
     }
 
@@ -505,11 +505,11 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #ffeb3b, #ff9800);
+      background: linear-gradient(135deg, #ff0000, #ff9800);
       color: #000;
       box-shadow:
         0 12px 30px rgba(0, 0, 0, 0.8),
-        0 0 18px rgba(255, 235, 59, 0.8);
+        0 0 18px rgba(255, 0, 0, 0.9);
     }
 
     .btn-primary:hover {
@@ -553,13 +553,13 @@
     }
 
     .pill-small.active {
-      background: rgba(255, 235, 59, 0.25);
-      border-color: rgba(255, 235, 59, 0.9);
+      background: rgba(255, 0, 0, 0.28);
+      border-color: rgba(255, 0, 0, 0.9);
     }
 
     .viewer-card {
       background:
-        radial-gradient(circle at top left, rgba(255, 235, 59, 0.09), transparent 55%),
+        radial-gradient(circle at top left, rgba(255, 0, 0, 0.18), transparent 55%),
         radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.06), transparent 55%),
         var(--card);
       border-radius: 18px;
@@ -584,7 +584,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.09em;
-      color: #ffeb3b;
+      color: #ff0000;
     }
 
     .badge {
@@ -598,8 +598,8 @@
     }
 
     .badge.yellow {
-      border-color: rgba(255, 235, 59, 0.8);
-      color: #fffde7;
+      border-color: rgba(255, 0, 0, 0.9);
+      color: #ffe4e4;
     }
 
     .fav-btn {
@@ -613,8 +613,8 @@
     }
 
     .fav-btn.active {
-      color: #ffeb3b;
-      text-shadow: 0 0 8px rgba(255, 235, 59, 0.8);
+      color: #ff0000;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.9);
     }
 
 
@@ -629,8 +629,8 @@
     }
 
     .fav-btn.active {
-      color: #ffeb3b;
-      text-shadow: 0 0 8px rgba(255, 235, 59, 0.8);
+      color: #ff0000;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.9);
     }
 
 
@@ -736,9 +736,9 @@
 
     .edit-btn {
       border-radius: 999px;
-      border: 1px solid rgba(255, 235, 59, 0.9);
+      border: 1px solid rgba(255, 0, 0, 0.9);
       background: rgba(0, 0, 0, 0.92);
-      color: #fffde7;
+      color: #ffe4e4;
       padding: 0.35rem 1rem;
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -747,8 +747,8 @@
     }
 
     .edit-btn:hover {
-      box-shadow: 0 0 16px rgba(255, 235, 59, 0.85);
-      background: rgba(255, 235, 59, 0.1);
+      box-shadow: 0 0 16px rgba(255, 0, 0, 0.85);
+      background: rgba(255, 0, 0, 0.16);
     }
 
     .edit-form {
@@ -1874,7 +1874,7 @@ function HomeView({ goAdd, goList }) {
                     fontWeight: 700
                   }}
                 >
-                  Espai Músics Garrotxa
+                  Tink Ànsies
                 </div>
                 <div
                   style={{
@@ -1929,7 +1929,7 @@ function HomeView({ goAdd, goList }) {
                 marginTop: "0.1rem",
                 background: loading
                   ? "#444"
-                  : "linear-gradient(135deg, #ffeb3b, #ff9800)",
+                  : "linear-gradient(135deg, #ff0000, #ff9800)",
                 color: "#000",
                 fontSize: "0.8rem",
                 fontWeight: 700,
@@ -2021,10 +2021,10 @@ function HomeView({ goAdd, goList }) {
           <div className="top-bar">
             <div className="top-left">
               <div className="top-logo">
-                <img src="icons/emg-icon-192.png" alt="EMG" />
+                <img src="icons/logo-tinkansies.png" alt="Tink Ànsies" />
               </div>
               <div>
-                <div className="top-title">Espai Músics Garrotxa</div>
+                <div className="top-title">Tink Ànsies</div>
                 <div className="top-badge">
                   fitxes de grups · associació: {associacio.nom}
                 </div>
