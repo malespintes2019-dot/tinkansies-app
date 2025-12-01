@@ -1780,14 +1780,206 @@ function HomeView({ goAdd, goList }) {
       );
     }
 
-    function App() {
+
+    function LoginAssociacio({ onLogin }) {
+      const [codi, setCodi] = useState("");
+      const [error, setError] = useState("");
+      const [loading, setLoading] = useState(false);
+
+      async function handleSubmit(e) {
+        e.preventDefault();
+        if (!codi.trim()) return;
+        setError("");
+        setLoading(true);
+        try {
+          const snap = await db
+            .collection("associacions")
+            .where("codiAcces", "==", codi.trim())
+            .limit(1)
+            .get();
+
+          if (snap.empty) {
+            setError("Codi incorrecte");
+            setLoading(false);
+            return;
+          }
+
+          const doc = snap.docs[0];
+          const data = doc.data() || {};
+          const id = doc.id;
+          const nom = data.nom || doc.id;
+
+          onLogin({ id, nom });
+          setLoading(false);
+        } catch (err) {
+          console.error("Error iniciant sessió d'associació", err);
+          setError("Error de connexió. Torna-ho a provar.");
+          setLoading(false);
+        }
+      }
+
+      return (
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#000",
+            padding: "1.5rem"
+          }}
+        >
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              width: "100%",
+              maxWidth: "360px",
+              background:
+                "radial-gradient(circle at top, rgba(255,235,59,0.12), transparent 55%), #050505",
+              borderRadius: "20px",
+              border: "1px solid rgba(255,255,255,0.16)",
+              padding: "1.5rem 1.4rem",
+              boxShadow:
+                "0 24px 60px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,255,255,0.03)",
+              color: "#fff"
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: "999px",
+                  border: "2px solid rgba(255,235,59,0.8)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background:
+                    "radial-gradient(circle at 30% 0%, rgba(255,235,59,0.95), rgba(255,160,0,0.2))",
+                  boxShadow: "0 0 18px rgba(255,235,59,0.7)"
+                }}
+              >
+                <img
+                  src="icons/emg-icon-192.png"
+                  alt="EMG"
+                  style={{ width: 28, height: 28, objectFit: "contain" }}
+                />
+              </div>
+              <div>
+                <div
+                  style={{
+                    fontSize: "0.9rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.16em",
+                    fontWeight: 700
+                  }}
+                >
+                  Espai Músics Garrotxa
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "#bbbbbb"
+                  }}
+                >
+                  accés per associacions
+                </div>
+              </div>
+            </div>
+
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.75rem",
+                textTransform: "uppercase",
+                letterSpacing: "0.16em",
+                marginBottom: "0.35rem",
+                color: "#bbbbbb"
+              }}
+            >
+              Codi d'associació
+            </label>
+            <input
+              type="password"
+              value={codi}
+              onChange={(e) => setCodi(e.target.value)}
+              placeholder="Introdueix el codi"
+              style={{
+                width: "100%",
+                borderRadius: "999px",
+                border: "1px solid rgba(255,255,255,0.2)",
+                padding: "0.6rem 0.9rem",
+                background: "rgba(0,0,0,0.85)",
+                color: "#fff",
+                fontSize: "0.9rem",
+                outline: "none",
+                marginBottom: "0.65rem"
+              }}
+            />
+            <button
+              type="submit"
+              disabled={loading || !codi.trim()}
+              style={{
+                width: "100%",
+                borderRadius: "999px",
+                border: "none",
+                padding: "0.65rem 1rem",
+                marginTop: "0.1rem",
+                background: loading
+                  ? "#444"
+                  : "linear-gradient(135deg, #ffeb3b, #ff9800)",
+                color: "#000",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.16em",
+                cursor: loading || !codi.trim() ? "default" : "pointer",
+                boxShadow: loading
+                  ? "none"
+                  : "0 14px 32px rgba(0,0,0,0.9), 0 0 16px rgba(255,235,59,0.8)"
+              }}
+            >
+              {loading ? "Entrant..." : "Entrar"}
+            </button>
+
+            {error && (
+              <p
+                style={{
+                  marginTop: "0.7rem",
+                  fontSize: "0.8rem",
+                  color: "#ff8a80"
+                }}
+              >
+                {error}
+              </p>
+            )}
+
+            <p
+              style={{
+                marginTop: "0.9rem",
+                fontSize: "0.7rem",
+                color: "#999",
+                lineHeight: 1.4
+              }}
+            >
+              Cada associació té el seu propi codi i només veu les seves fitxes.
+            </p>
+          </form>
+        </div>
+      );
+    }
+
+    function App({ associacio, onLogout }) {
       const [view, setView] = useState("home");
       const [bands, setBands] = useState([]);
 
       useEffect(() => {
+        if (!associacio || !associacio.id) return;
         const unsubscribe = db
           .collection("bands")
-          .orderBy("name")
+          .where("associacioId", "==", associacio.id)
           .onSnapshot(
             (snapshot) => {
               const docs = snapshot.docs.map((doc) => ({
@@ -1801,13 +1993,18 @@ function HomeView({ goAdd, goList }) {
             }
           );
         return () => unsubscribe();
-      }, []);
+      }, [associacio]);
 
       function handleAdd(band) {
         const { id, ...data } = band;
+        if (!associacio || !associacio.id) {
+          alert("Cap associació seleccionada.");
+          return;
+        }
         db.collection("bands")
           .add({
             ...data,
+            associacioId: associacio.id,
             createdAt: new Date(),
           })
           .then(() => {
@@ -1828,7 +2025,9 @@ function HomeView({ goAdd, goList }) {
               </div>
               <div>
                 <div className="top-title">Espai Músics Garrotxa</div>
-                <div className="top-badge">fitxes de grups</div>
+                <div className="top-badge">
+                  fitxes de grups · associació: {associacio.nom}
+                </div>
               </div>
             </div>
             <div className="top-nav">
@@ -1853,6 +2052,14 @@ function HomeView({ goAdd, goList }) {
                 <span className="dot" />
                 Grups
               </button>
+              <button
+                className="top-nav-btn"
+                type="button"
+                onClick={onLogout}
+              >
+                <span className="dot" />
+                Sortir
+              </button>
             </div>
           </div>
 
@@ -1868,8 +2075,50 @@ function HomeView({ goAdd, goList }) {
       );
     }
 
+    function RootApp() {
+      const [associacio, setAssociacio] = useState(null);
+
+      useEffect(() => {
+        try {
+          const id = window.localStorage.getItem("associacioId");
+          const nom = window.localStorage.getItem("associacioNom");
+          if (id && nom) {
+            setAssociacio({ id, nom });
+          }
+        } catch (e) {
+          console.error("Error llegint associació des de localStorage", e);
+        }
+      }, []);
+
+      function handleLogin(info) {
+        try {
+          window.localStorage.setItem("associacioId", info.id);
+          window.localStorage.setItem("associacioNom", info.nom);
+        } catch (e) {
+          console.error("Error guardant associació al localStorage", e);
+        }
+        setAssociacio({ id: info.id, nom: info.nom });
+      }
+
+      function handleLogout() {
+        try {
+          window.localStorage.removeItem("associacioId");
+          window.localStorage.removeItem("associacioNom");
+        } catch (e) {
+          console.error("Error netejant localStorage", e);
+        }
+        setAssociacio(null);
+      }
+
+      if (!associacio) {
+        return <LoginAssociacio onLogin={handleLogin} />;
+      }
+
+      return <App associacio={associacio} onLogout={handleLogout} />;
+    }
+
     const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
+    root.render(<RootApp />);
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
