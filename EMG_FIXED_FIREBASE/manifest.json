@@ -1,0 +1,27 @@
+{
+  "name": "EMG Fitxes",
+  "short_name": "EMG",
+  "description": "App per gestionar les fitxes de grups de l'EMG.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icons/emg-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/emg-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait-primary",
+  "id": "emg.fitxes.app",
+  "categories": [
+    "music",
+    "productivity"
+  ]
+}
