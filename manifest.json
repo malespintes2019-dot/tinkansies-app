@@ -1,20 +1,27 @@
 {
-  "name": "Tink \u00c0nsies",
-  "short_name": "Tink \u00c0nsies",
-  "start_url": ".",
+  "name": "Tink Ànsies",
+  "short_name": "Tink Ànsies",
+  "description": "App per gestionar les fitxes de grups de Tink Ànsies.",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "icons/logo-tinkansies.png",
+      "src": "/icons/logo-tinkansies.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/logo-tinkansies.png",
+      "src": "/icons/logo-tinkansies.png",
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "orientation": "portrait-primary",
+  "id": "tink.ansies.app",
+  "categories": [
+    "music",
+    "productivity"
   ]
 }

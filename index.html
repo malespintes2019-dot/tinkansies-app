@@ -299,11 +299,24 @@
       height: 190px;
       cursor: pointer;
       transition: transform 0.15s ease, filter 0.15s ease;
-      background-image: url('img/explosio.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      background: none;
       filter: drop-shadow(0 0 25px rgba(255, 0, 0, 0.7));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .burst-btn-inner::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 78%;
+      aspect-ratio: 1 / 1;
+      border-radius: 999px;
+      background: #000000 url('icons/logo-tinkansies.png') center center / 80% no-repeat;
+      opacity: 0.98;
     }
 
     .burst-btn-inner {
@@ -334,8 +347,11 @@
     }
 
     .burst-btn .burst-main {
-      color: #000000;
-      text-shadow: none;
+      position: relative;
+      z-index: 2;
+      color: #ffffff;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+      margin-top: 5.4rem;
     }
 
 
@@ -1340,7 +1356,7 @@
         }
 
         const b = current;
-        let text = `FITXA DE GRUP - TINK ÀNSIES\n\n`;
+        let text = `FITXA DE GRUP - ESPAI MÚSICS GARROTXA\n\n`;
         text += `Nom: ${b.name || "-"}\n`;
         text += `Estil: ${b.style || "-"}\n`;
         text += `Origen: ${b.origin || "-"}\n`;
@@ -1727,13 +1743,15 @@
     }
 
     
-function HomeView({ goAdd, goList }) {
+function HomeView({ goAdd, goList, associacio }) {
       return (
         <div className="page-wrap">
           <div className="home-hero">
             <div className="home-hero-overlay" />
             <div className="home-hero-inner">
-              <h1 className="home-hero-title">TINK ÀNSIES</h1>
+              <h1 className="home-hero-title">
+                {associacio?.nom || "Tink Ànsies"}
+              </h1>
               <div className="home-hero-bursts">
                 <button className="burst-btn" type="button" onClick={goAdd}>
                   <div className="burst-btn-inner">
@@ -2067,6 +2085,7 @@ function HomeView({ goAdd, goList }) {
             <HomeView
               goAdd={() => setView("add")}
               goList={() => setView("list")}
+              associacio={associacio}
             />
           )}
           {view === "add" && <AddView bands={bands} onAdd={handleAdd} />}
