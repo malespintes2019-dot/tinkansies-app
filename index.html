@@ -840,6 +840,14 @@
       font-style: italic;
     }
   </style>
+
+<style>
+.footer-sign { text-align:center; padding:12px 0; font-size:14px; color:#ff0000cc; }
+.footer-sign .r {
+  font-size: 10px;
+  vertical-align: super;
+}
+</style>
 </head>
 <body>
   <div id="root"></div>
@@ -1068,12 +1076,20 @@
               </div>
             </div>
 
-            <div className="btn-row">
+            
+          
+            
+
+<div class="form-group">
+              <label htmlFor="altres">Altres dades d'interès</label>
+              <textarea id="altres" name="altres" rows="3" placeholder="Informació extra"></textarea>
+            </div>
+<div className="btn-row">
               <button type="submit" className="btn-primary">
                 <span>Desar fitxa</span>
               </button>
             </div>
-          </form>
+</form>
         </div>
       );
     }
@@ -1728,7 +1744,10 @@
                       Cancel·lar
                     </button>
                   </div>
-                </form>
+                
+            
+
+</form>
               ) : (
                 <BandCard
                   band={current}
@@ -1984,7 +2003,10 @@ function HomeView({ goAdd, goList, associacio }) {
             >
               Cada associació té el seu propi codi i només veu les seves fitxes.
             </p>
-          </form>
+          
+            
+
+</form>
         </div>
       );
     }
@@ -2147,5 +2169,8 @@ function HomeView({ goAdd, goList, associacio }) {
       });
     }
   </script>
+<footer class="footer-sign">
+  🦇 by Males Pintes <span class="r">®</span> 🦇
+</footer>
 </body>
 </html>
